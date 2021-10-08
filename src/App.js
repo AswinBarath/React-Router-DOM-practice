@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
+
 import './App.css';
+
+const HomePage = props => {
+  console.log(props);
+  return (
+    <div>
+      <button onClick={() => props.history.push('/topics')}>Topics </button>
+      <h1>HOME PAGE</h1>
+    </div>
+  );
+};
+
+const TopicsList = props => {
+  return (
+    <div>
+      <h1>TOPIC LIST PAGE</h1>
+      <Link to={`${props.match.url}/13`}>TO TOPIC 13</Link>
+      <Link to={`${props.match.url}/17`}>TO TOPIC 17</Link>
+      <Link to={`${props.match.url}/21`}>TO TOPIC 21</Link>
+    </div>
+  );
+};
+
+const TopicDetail = props => {
+  return (
+    <div>
+      <h1>TOPIC DETAIL PAGE: {props.match.params.topicId}</h1>
+    </div>
+  );
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Route exact path='/' component={HomePage} />
+      <Route exact path='/topics' component={TopicsList} />
+      <Route path='/topics/:topicId' component={TopicDetail} />
+      <Route exact path='/blog/topics' component={TopicsList} />
+      <Route path='/blog/topics/:topicId' component={TopicDetail} />
     </div>
   );
 }
